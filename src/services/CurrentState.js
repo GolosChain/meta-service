@@ -3,16 +3,13 @@ const fs = require('fs-extra');
 const core = require('gls-core-service');
 const moment = require('moment');
 const times = require('lodash/times');
+const { Post } = require('../model');
 
 const BasicService = core.services.Basic;
 const { Logger, statsClient } = core.utils;
 
-const { Post } = require('../model');
-
 const HISTORY_LIMIT = 24; // hours
-
 const STATE_DATE_FORMAT = 'YYYY-MM-DD_HH-mm-ss';
-
 const STATE_DIR = path.join(__dirname, '../../state');
 
 class CurrentState extends BasicService {

@@ -7,8 +7,14 @@
     "start": "node src/index.js"
   },
   "keywords": [],
-  "author": "Golos Team",
+  "author": "golos.io",
   "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^7.0.1",
+    "gls-core-service": "^2.13.4",
+    "lodash": "^4.17.11",
+    "moment": "^2.23.0"
+  },
   "prettier": {
     "singleQuote": true,
     "tabWidth": 4,
@@ -25,11 +31,5 @@
         }
       }
     ]
-  },
-  "dependencies": {
-    "fs-extra": "^7.0.1",
-    "gls-core-service": "^2.13.4",
-    "lodash": "^4.17.11",
-    "moment": "^2.23.0"
   }
 }

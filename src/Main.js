@@ -4,11 +4,11 @@ const Connector = require('./services/Connector');
 const CurrentState = require('./services/CurrentState');
 
 const stats = core.utils.statsClient;
-const { Basic, MongoDB } = core.services;
+const { BasicMain, MongoDB } = core.services;
 
-class Main extends Basic {
+class Main extends BasicMain {
     constructor() {
-        super();
+        super(stats, env);
 
         const mongo = new MongoDB();
         const currentState = new CurrentState();
@@ -16,18 +16,6 @@ class Main extends Basic {
 
         this.printEnvBasedConfig(env);
         this.addNested(mongo, currentState, gate);
-        this.stopOnExit();
-    }
-
-    async start() {
-        await this.startNested();
-        stats.increment('main_service_start');
-    }
-
-    async stop() {
-        await this.stopNested();
-        stats.increment('main_service_stop');
-        process.exit(0);
     }
 }
 

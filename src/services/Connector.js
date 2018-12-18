@@ -1,7 +1,5 @@
 const core = require('gls-core-service');
-const bindAll = require('lodash/bindAll');
 const stats = core.utils.statsClient;
-
 const BasicConnector = core.services.Connector;
 
 class Connector extends BasicConnector {
@@ -10,14 +8,15 @@ class Connector extends BasicConnector {
 
         this._currentState = currentState;
 
-        bindAll(this, ['_getPostSeenCount', '_recordSeen']);
+        this._getPostSeenCount = this._getPostSeenCount.bind(this);
+        this._recordPostSeen = this._recordPostSeen.bind(this);
     }
 
     async start() {
         await super.start({
             serverRoutes: {
                 getPostSeenCount: this._getPostSeenCount,
-                recordSeen: this._recordSeen,
+                recordPostSeen: this._recordPostSeen,
             },
         });
     }
@@ -41,8 +40,8 @@ class Connector extends BasicConnector {
         };
     }
 
-    async _recordSeen({ postLink, fingerPrint, ip }) {
-        if (!postLink || !fingerPrint) {
+    async _recordPostSeen({ postLink, fingerPrint, ip }) {
+        if (!postLink || !fingerPrint || !ip) {
             throw {
                 code: 11110,
                 message: 'Invalid params',
@@ -53,11 +52,7 @@ class Connector extends BasicConnector {
 
         await this._currentState.tryRecordSeen(postLink, { fingerPrint, ip });
 
-        stats.timing('seen_counter_record_seen_api', Date.now() - start);
-
-        return {
-            status: 'OK',
-        };
+        stats.timing('seen_counter_record_post_seen_api', Date.now() - start);
     }
 }
 
