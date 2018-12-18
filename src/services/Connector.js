@@ -33,7 +33,7 @@ class Connector extends BasicConnector {
         for (const postLink of postLinks) {
             results.push({
                 postLink,
-                count: await this._currentState.getPostSeenCount(postLink),
+                viewCount: await this._currentState.getPostSeenCount(postLink),
             });
         }
 
