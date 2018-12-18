@@ -5,8 +5,8 @@
 ##### API JSON-RPC:
 
 ```
-getPostSeenCount:           // Получить количество просмотров поста
-    postLink <string>       // Строка в формате author/perm-link
+getPostsSeenCount:          // Получить количество просмотров поста
+    postLinks <string[]>    // Строки в формате author/perm-link
 
 recordPostSeen:             // Записать просмотр
     postLink <string>       // Строка в формате author/perm-link

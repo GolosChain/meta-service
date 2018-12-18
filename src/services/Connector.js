@@ -8,14 +8,14 @@ class Connector extends BasicConnector {
 
         this._currentState = currentState;
 
-        this._getPostSeenCount = this._getPostSeenCount.bind(this);
+        this._getPostsSeenCount = this._getPostsSeenCount.bind(this);
         this._recordPostSeen = this._recordPostSeen.bind(this);
     }
 
     async start() {
         await super.start({
             serverRoutes: {
-                getPostSeenCount: this._getPostSeenCount,
+                getPostsSeenCount: this._getPostsSeenCount,
                 recordPostSeen: this._recordPostSeen,
             },
         });
@@ -25,10 +25,17 @@ class Connector extends BasicConnector {
         await this.stopNested();
     }
 
-    async _getPostSeenCount({ postLink }) {
+    async _getPostsSeenCount({ postLinks }) {
         const start = Date.now();
 
-        const count = await this._currentState.getPostSeenCount(postLink);
+        const results = [];
+
+        for (const postLink of postLinks) {
+            results.push({
+                postLink,
+                count: await this._currentState.getPostSeenCount(postLink),
+            });
+        }
 
         stats.timing(
             'seen_counter_get_posts_seen_count_api',
@@ -36,7 +43,7 @@ class Connector extends BasicConnector {
         );
 
         return {
-            count,
+            results,
         };
     }
 
