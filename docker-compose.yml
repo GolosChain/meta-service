@@ -19,8 +19,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    volumes:
-      - /var/state:/app/state
     networks:
       - seen_counter_services-tier
     ports:
