@@ -1,0 +1,35 @@
+{
+  "name": "golos-seen-counter",
+  "version": "0.1.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "keywords": [],
+  "author": "Golos Team",
+  "license": "ISC",
+  "prettier": {
+    "singleQuote": true,
+    "tabWidth": 4,
+    "semi": true,
+    "trailingComma": "es5",
+    "overrides": [
+      {
+        "files": [
+          "*.yml",
+          "*.json"
+        ],
+        "options": {
+          "tabWidth": 2
+        }
+      }
+    ]
+  },
+  "dependencies": {
+    "fs-extra": "^7.0.1",
+    "gls-core-service": "^2.13.4",
+    "lodash": "^4.17.11",
+    "moment": "^2.23.0"
+  }
+}

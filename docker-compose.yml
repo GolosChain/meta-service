@@ -1,0 +1,41 @@
+version: '3.6'
+services:
+  mongo:
+    container_name: seen_counter_mongo
+    image: mongo:4
+    restart: always
+    volumes:
+      - mongodb_vol:/data/db
+    networks:
+      - seen_counter_services-tier
+    ports:
+      - 127.0.0.1:$GLS_MONGO_EXTERNAL_PORT:27017
+
+  node:
+    container_name: seen_counter_node
+    restart: always
+    depends_on:
+      - mongo
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - /var/state:/app/state
+    networks:
+      - seen_counter_services-tier
+    ports:
+      - $GLS_CONNECTOR_HOST:$GLS_CONNECTOR_PORT:$GLS_CONNECTOR_PORT
+    environment:
+      - GLS_DAY_START
+      - GLS_MONGO_CONNECT
+      - GLS_METRICS_HOST
+      - GLS_METRICS_PORT
+      - GLS_CONNECTOR_HOST
+      - GLS_CONNECTOR_PORT
+      - GLS_MONGO_EXTERNAL_PORT
+
+volumes:
+  mongodb_vol:
+
+networks:
+  seen_counter_services-tier:
