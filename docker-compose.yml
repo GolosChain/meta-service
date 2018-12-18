@@ -6,8 +6,6 @@ services:
     restart: always
     volumes:
       - mongodb_vol:/data/db
-    networks:
-      - seen_counter_services-tier
     ports:
       - 127.0.0.1:$GLS_MONGO_EXTERNAL_PORT:27017
 
@@ -19,8 +17,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    networks:
-      - seen_counter_services-tier
     ports:
       - $GLS_CONNECTOR_HOST:$GLS_CONNECTOR_PORT:$GLS_CONNECTOR_PORT
     environment:
@@ -34,6 +30,3 @@ services:
 
 volumes:
   mongodb_vol:
-
-networks:
-  seen_counter_services-tier:
