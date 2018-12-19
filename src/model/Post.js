@@ -8,7 +8,7 @@ module.exports = MongoDB.makeModel(
             type: String,
             required: true,
         },
-        count: {
+        viewCount: {
             type: Number,
             default: 0,
             required: true,

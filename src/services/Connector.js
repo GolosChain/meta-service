@@ -8,15 +8,15 @@ class Connector extends BasicConnector {
 
         this._currentState = currentState;
 
-        this._getPostsSeenCount = this._getPostsSeenCount.bind(this);
-        this._recordPostSeen = this._recordPostSeen.bind(this);
+        this._getPostsViewCount = this._getPostsViewCount.bind(this);
+        this._recordPostView = this._recordPostView.bind(this);
     }
 
     async start() {
         await super.start({
             serverRoutes: {
-                getPostsSeenCount: this._getPostsSeenCount,
-                recordPostSeen: this._recordPostSeen,
+                getPostsViewCount: this._getPostsViewCount,
+                recordPostView: this._recordPostView,
             },
         });
     }
@@ -25,7 +25,7 @@ class Connector extends BasicConnector {
         await this.stopNested();
     }
 
-    async _getPostsSeenCount({ postLinks }) {
+    async _getPostsViewCount({ postLinks }) {
         const start = Date.now();
 
         const results = [];
@@ -33,21 +33,18 @@ class Connector extends BasicConnector {
         for (const postLink of postLinks) {
             results.push({
                 postLink,
-                viewCount: await this._currentState.getPostSeenCount(postLink),
+                viewCount: await this._currentState.getPostViewCount(postLink),
             });
         }
 
-        stats.timing(
-            'look_counter_get_posts_seen_count_api',
-            Date.now() - start
-        );
+        stats.timing('meta_get_posts_view_count_api', Date.now() - start);
 
         return {
             results,
         };
     }
 
-    async _recordPostSeen({ postLink, fingerPrint, ip }) {
+    async _recordPostView({ postLink, fingerPrint, ip }) {
         if (!postLink || !fingerPrint || !ip) {
             throw {
                 code: 11110,
@@ -57,9 +54,9 @@ class Connector extends BasicConnector {
 
         const start = Date.now();
 
-        await this._currentState.tryRecordSeen(postLink, { fingerPrint, ip });
+        await this._currentState.tryRecordView(postLink, { fingerPrint, ip });
 
-        stats.timing('look_counter_record_post_seen_api', Date.now() - start);
+        stats.timing('meta_record_post_view_api', Date.now() - start);
     }
 }
 

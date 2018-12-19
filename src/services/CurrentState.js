@@ -19,17 +19,17 @@ class CurrentState extends BasicService {
         });
     }
 
-    async getPostSeenCount(postLink) {
+    async getPostViewCount(postLink) {
         const post = await Post.findOne({ postLink });
 
         if (!post) {
             return 0;
         }
 
-        return post.count;
+        return post.viewCount;
     }
 
-    async tryRecordSeen(postLink, { fingerPrint, ip }) {
+    async tryRecordView(postLink, { fingerPrint, ip }) {
         const viewKey = `${postLink}_${ip}_${fingerPrint}`;
 
         try {
@@ -50,7 +50,7 @@ class CurrentState extends BasicService {
 
         await Post.updateOne(
             { postLink },
-            { $inc: { count: 1 } },
+            { $inc: { viewCount: 1 } },
             { upsert: true }
         );
     }

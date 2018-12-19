@@ -1,14 +1,14 @@
-# LOOK-COUNTER-SERVICE
+# META-SERVICE
 
-Сервис хранящий количество просмотров постов.
+Сервис хранящий мета данные, в частности количество просмотров постов.
 
 ##### API JSON-RPC:
 
 ```
-getPostsSeenCount:          // Получить количество просмотров поста
+getPostsViewCount:          // Получить количество просмотров поста
     postLinks <string[]>    // Строки в формате author/perm-link
 
-recordPostSeen:             // Записать просмотр
+recordPostView:             // Записать просмотр
     postLink <string>       // Строка в формате author/perm-link
     fingerPrint <string>    // Строка являющаяся фингер принтом браузера
     ip <string>             // Строка, IPv4 or IPv6 (выставляет facade-service)
