@@ -1,7 +1,7 @@
 version: '3.6'
 services:
   mongo:
-    container_name: seen_counter_mongo
+    container_name: look_counter_mongo
     image: mongo:4
     restart: always
     networks:
@@ -12,7 +12,7 @@ services:
       - $GLS_MONGO_EXTERNAL_HOST:$GLS_MONGO_EXTERNAL_PORT:27017
 
   node:
-    container_name: seen_counter_node
+    container_name: look_counter_node
     restart: always
     networks:
       - services-tier

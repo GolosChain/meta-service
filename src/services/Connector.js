@@ -38,7 +38,7 @@ class Connector extends BasicConnector {
         }
 
         stats.timing(
-            'seen_counter_get_posts_seen_count_api',
+            'look_counter_get_posts_seen_count_api',
             Date.now() - start
         );
 
@@ -59,7 +59,7 @@ class Connector extends BasicConnector {
 
         await this._currentState.tryRecordSeen(postLink, { fingerPrint, ip });
 
-        stats.timing('seen_counter_record_post_seen_api', Date.now() - start);
+        stats.timing('look_counter_record_post_seen_api', Date.now() - start);
     }
 }
 
