@@ -1,4 +1,4 @@
-# SEEN-COUNTER-SERVICE
+# LOOK-COUNTER-SERVICE
 
 Сервис хранящий количество просмотров постов.
 
