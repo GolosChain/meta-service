@@ -9,7 +9,7 @@ services:
     volumes:
       - mongodb_vol:/data/db
     ports:
-      - 127.0.0.1:$GLS_MONGO_EXTERNAL_PORT:27017
+      - $GLS_MONGO_EXTERNAL_HOST:$GLS_MONGO_EXTERNAL_PORT:27017
 
   node:
     container_name: seen_counter_node
@@ -30,6 +30,7 @@ services:
       - GLS_METRICS_PORT
       - GLS_CONNECTOR_HOST
       - GLS_CONNECTOR_PORT
+      - GLS_MONGO_EXTERNAL_HOST
       - GLS_MONGO_EXTERNAL_PORT
 
 volumes:
