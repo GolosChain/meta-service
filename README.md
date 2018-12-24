@@ -5,13 +5,13 @@
 ##### API JSON-RPC:
 
 ```
-getPostsViewCount:          // Получить количество просмотров поста
-    postLinks <string[]>    // Строки в формате author/perm-link
+getPostsViewCount:            // Получить количество просмотров поста
+    postLinks <string[]>      // Строки в формате author/perm-link
 
-recordPostView:             // Записать просмотр
-    postLink <string>       // Строка в формате author/perm-link
-    fingerPrint <string>    // Строка являющаяся фингер принтом браузера
-    ip <string>             // Строка, IPv4 or IPv6 (выставляет facade-service)
+recordPostView:               // Записать просмотр
+    postLink <string>         // Строка в формате author/perm-link
+    fingerPrint <string>      // Строка являющаяся фингер принтом браузера
+    clientRequestIp <string>  // Строка, IPv4 or IPv6 (выставляет facade-service)
 ```
 
 Возможные переменные окружения `ENV`:

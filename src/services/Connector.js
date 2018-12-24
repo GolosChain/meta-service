@@ -44,8 +44,8 @@ class Connector extends BasicConnector {
         };
     }
 
-    async _recordPostView({ postLink, fingerPrint, ip }) {
-        if (!postLink || !fingerPrint || !ip) {
+    async _recordPostView({ postLink, fingerPrint, clientRequestIp }) {
+        if (!postLink || !fingerPrint || !clientRequestIp) {
             throw {
                 code: 11110,
                 message: 'Invalid params',
@@ -54,7 +54,10 @@ class Connector extends BasicConnector {
 
         const start = Date.now();
 
-        await this._currentState.tryRecordView(postLink, { fingerPrint, ip });
+        await this._currentState.tryRecordView(postLink, {
+            fingerPrint,
+            ip: clientRequestIp,
+        });
 
         stats.timing('meta_record_post_view_api', Date.now() - start);
     }
