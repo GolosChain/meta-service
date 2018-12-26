@@ -1,11 +1,9 @@
 const core = require('gls-core-service');
-const snakeCase = require('lodash/snakeCase');
-const stats = core.utils.statsClient;
 const BasicConnector = core.services.Connector;
 
 class Connector extends BasicConnector {
     constructor(currentState) {
-        super();
+        super('meta');
 
         this._currentState = currentState;
     }
@@ -13,10 +11,10 @@ class Connector extends BasicConnector {
     async start() {
         await super.start({
             serverRoutes: {
-                getPostsViewCount: this._wrapApi(this._getPostsViewCount),
-                recordPostView: this._wrapApi(this._recordPostView),
-                markUserOnline: this._wrapApi(this._markUserOnline),
-                getUsersLastOnline: this._wrapApi(this._getUsersLastOnline),
+                getPostsViewCount: this._getPostsViewCount.bind(this),
+                recordPostView: this._recordPostView.bind(this),
+                markUserOnline: this._markUserOnline.bind(this),
+                getUsersLastOnline: this._getUsersLastOnline.bind(this),
             },
         });
     }
@@ -24,30 +22,6 @@ class Connector extends BasicConnector {
     async stop() {
         await super.stop();
         await this.stopNested();
-    }
-
-    _wrapApi(func) {
-        const apiName = snakeCase(func.name.replace(/^_/, ''));
-
-        return async (...args) => {
-            const startTs = Date.now();
-            let isError = false;
-
-            try {
-                return await func.apply(this, args);
-            } catch (err) {
-                isError = true;
-                throw err;
-            } finally {
-                let eventName = `meta_api_${apiName}`;
-
-                if (isError) {
-                    eventName += '_error';
-                }
-
-                stats.timing(eventName, Date.now() - startTs);
-            }
-        };
     }
 
     async _getPostsViewCount({ postLinks }) {
