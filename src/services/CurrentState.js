@@ -1,8 +1,6 @@
-const path = require('path');
-const fs = require('fs-extra');
 const core = require('gls-core-service');
 const moment = require('moment');
-const { Post, View } = require('../model');
+const { Post, View, User } = require('../model');
 
 const BasicService = core.services.Basic;
 
@@ -53,6 +51,24 @@ class CurrentState extends BasicService {
             { $inc: { viewCount: 1 } },
             { upsert: true }
         );
+    }
+
+    async markUserOnline(username) {
+        await User.updateOne(
+            { username },
+            { lastOnlineTs: new Date() },
+            { upsert: true }
+        );
+    }
+
+    async getUserLastOnline(username) {
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return null;
+        }
+
+        return user.lastOnlineTs || null;
     }
 }
 

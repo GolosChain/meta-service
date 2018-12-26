@@ -12,15 +12,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - $GLS_CONNECTOR_HOST:$GLS_CONNECTOR_PORT:$GLS_CONNECTOR_PORT
-    environment:
-      - GLS_DAY_START
-      - GLS_MONGO_CONNECT
-      - GLS_METRICS_HOST
-      - GLS_METRICS_PORT
-      - GLS_CONNECTOR_HOST
-      - GLS_CONNECTOR_PORT
-      - GLS_MONGO_EXTERNAL_HOST
-      - GLS_MONGO_EXTERNAL_PORT
+    env_file:
+      - .env
 
   mongo:
     container_name: meta_mongo
