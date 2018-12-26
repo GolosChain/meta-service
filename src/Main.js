@@ -10,6 +10,10 @@ class Main extends BasicMain {
     constructor() {
         super(stats, env);
 
+        this.defineMeta({
+            name: 'meta',
+        });
+
         const mongo = new MongoDB();
         const currentState = new CurrentState();
         const gate = new Connector(currentState);

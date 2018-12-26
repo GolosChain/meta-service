@@ -3,8 +3,7 @@ const BasicConnector = core.services.Connector;
 
 class Connector extends BasicConnector {
     constructor(currentState) {
-        super('meta');
-
+        super();
         this._currentState = currentState;
     }
 
@@ -54,13 +53,6 @@ class Connector extends BasicConnector {
     }
 
     async _markUserOnline({ username }) {
-        if (!username) {
-            throw {
-                code: 1110,
-                message: 'Invalid params',
-            };
-        }
-
         await this._currentState.markUserOnline(username);
     }
 
