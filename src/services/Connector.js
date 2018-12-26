@@ -14,7 +14,7 @@ class Connector extends BasicConnector {
                 getPostsViewCount: this._getPostsViewCount.bind(this),
                 recordPostView: this._recordPostView.bind(this),
                 markUserOnline: this._markUserOnline.bind(this),
-                getUsersLastOnline: this._getUsersLastOnline.bind(this),
+                getUserLastOnline: this._getUserLastOnline.bind(this),
             },
         });
     }
@@ -64,29 +64,21 @@ class Connector extends BasicConnector {
         await this._currentState.markUserOnline(username);
     }
 
-    async _getUsersLastOnline({ usernames }) {
-        if (!usernames || !Array.isArray(usernames)) {
+    async _getUserLastOnline({ username }) {
+        if (!username) {
             throw {
                 code: 1110,
                 message: 'Invalid params',
             };
         }
 
-        const results = [];
-
-        for (const username of usernames) {
-            const lastOnlineTs = await this._currentState.getUserLastOnline(
-                username
-            );
-
-            results.push({
-                username,
-                lastOnlineTs,
-            });
-        }
+        const lastOnlineTs = await this._currentState.getUserLastOnline(
+            username
+        );
 
         return {
-            results,
+            username,
+            lastOnlineTs,
         };
     }
 }
