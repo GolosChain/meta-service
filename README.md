@@ -14,10 +14,10 @@ recordPostView:               // Записать просмотр
     clientRequestIp <string>  // Строка, IPv4 or IPv6 (выставляет facade-service)
 
 markUserOnline:               // Пометить юзера как онлайн
-    username <string>         // Имя пользователя
+    user <string>             // Имя пользователя
 
-getUsersLastOnline:           // Получить время (timestamp) последного онлайна пользователей
-    usernames <string[]>      // Именя пользователей
+getUserLastOnline:            // Получить время (timestamp) последного онлайна пользователя
+    user <string>             // Имя пользователя
 ```
 
 Возможные переменные окружения `ENV`:

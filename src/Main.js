@@ -1,7 +1,7 @@
 const core = require('gls-core-service');
 const env = require('./env');
 const Connector = require('./services/Connector');
-const CurrentState = require('./services/CurrentState');
+const Cleaner = require('./services/Cleaner');
 
 const stats = core.utils.statsClient;
 const { BasicMain, MongoDB } = core.services;
@@ -15,11 +15,11 @@ class Main extends BasicMain {
         });
 
         const mongo = new MongoDB();
-        const currentState = new CurrentState();
-        const gate = new Connector(currentState);
+        const cleaner = new Cleaner();
+        const gate = new Connector();
 
         this.printEnvBasedConfig(env);
-        this.addNested(mongo, currentState, gate);
+        this.addNested(mongo, cleaner, gate);
     }
 }
 

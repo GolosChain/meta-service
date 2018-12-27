@@ -8,7 +8,7 @@ module.exports = MongoDB.makeModel(
             type: String,
             required: true,
         },
-        lastOnlineTs: {
+        lastOnlineAt: {
             type: Date,
         },
     },
