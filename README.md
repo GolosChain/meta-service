@@ -12,6 +12,12 @@ recordPostView:               // Записать просмотр
     postLink <string>         // Строка в формате author/perm-link
     fingerPrint <string>      // Строка являющаяся фингер принтом браузера
     clientRequestIp <string>  // Строка, IPv4 or IPv6 (выставляет facade-service)
+
+markUserOnline:               // Пометить юзера как онлайн
+    user <string>             // Имя пользователя
+
+getUserLastOnline:            // Получить время (timestamp) последного онлайна пользователя
+    user <string>             // Имя пользователя
 ```
 
 Возможные переменные окружения `ENV`:
