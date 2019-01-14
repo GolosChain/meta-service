@@ -5,7 +5,7 @@ const BasicController = core.controllers.Basic;
 
 class ViewCount extends BasicController {
     async getPostsViewCount({ postLinks }) {
-        if (postLinks) {
+        if (!postLinks) {
             throw {
                 code: 1110,
                 message: 'Invalid params',
