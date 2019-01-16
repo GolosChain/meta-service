@@ -14,12 +14,14 @@ class ViewCount extends BasicController {
 
         const results = [];
 
-        for (const postLink of postLinks) {
-            results.push({
-                postLink,
-                viewCount: await this._getPostViewCount(postLink),
-            });
-        }
+        await Promise.all(
+            postLinks.map(async postLink => {
+                results.push({
+                    postLink,
+                    viewCount: await this._getPostViewCount(postLink),
+                });
+            })
+        );
 
         return {
             results,
