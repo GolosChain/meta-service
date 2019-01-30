@@ -39,36 +39,39 @@ class ViewCount extends BasicController {
     }
 
     async recordPostView({ postLink, fingerPrint, clientRequestIp }) {
-        if (!postLink || !fingerPrint || !clientRequestIp) {
+        if (!postLink) {
             throw {
                 code: 1110,
                 message: 'Invalid params',
             };
         }
 
-        const viewKey = `${postLink}_${clientRequestIp}_${fingerPrint}`;
+        // if (!postLink || !fingerPrint || !clientRequestIp) {
+        //     throw {
+        //         code: 1110,
+        //         message: 'Invalid params',
+        //     };
+        // }
+        //
+        // const viewKey = `${postLink}_${clientRequestIp}_${fingerPrint}`;
+        //
+        // try {
+        //     const view = new View({
+        //         viewKey,
+        //         ts: new Date(),
+        //     });
+        //
+        //     await view.save();
+        // } catch (err) {
+        //     // 11000 - duplicate key error
+        //     if (err.code === 11000) {
+        //         return;
+        //     } else {
+        //         throw err;
+        //     }
+        // }
 
-        try {
-            const view = new View({
-                viewKey,
-                ts: new Date(),
-            });
-
-            await view.save();
-        } catch (err) {
-            // 11000 - duplicate key error
-            if (err.code === 11000) {
-                return;
-            } else {
-                throw err;
-            }
-        }
-
-        await Post.updateOne(
-            { postLink },
-            { $inc: { viewCount: 1 } },
-            { upsert: true }
-        );
+        await Post.updateOne({ postLink }, { $inc: { viewCount: 1 } }, { upsert: true });
     }
 }
 
