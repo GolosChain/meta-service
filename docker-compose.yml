@@ -12,6 +12,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - $GLS_CONNECTOR_HOST:$GLS_CONNECTOR_PORT:$GLS_CONNECTOR_PORT
+      - 0.0.0.0:9777:9777
     env_file:
       - .env
 
