@@ -123,8 +123,3 @@ server.get('/metrics/counter', (req, res) => {
 
 console.log('Server listening to 3000, metrics exposed on /metrics endpoint');
 server.listen(9777);
-
-setInterval(() => {
-    callCounter.inc();
-    hist.observe(Math.floor(Math.random() * 3000));
-}, 3000);
