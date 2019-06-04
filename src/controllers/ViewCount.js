@@ -1,16 +1,48 @@
+const client = require('prom-client');
+
 const core = require('gls-core-service');
 const { Post, View } = require('../model');
 
 const BasicController = core.controllers.Basic;
 
+client.collectDefaultMetrics({ timeout: 5000 });
+
+const callCounter = new client.Counter({
+    name: 'api_getPostsViewCount_count',
+    help: 'api call count',
+});
+
+const callCounter2 = new client.Counter({
+    name: 'api_getpostsviewcount_count',
+    help: 'api call count',
+});
+
+const hist = new client.Histogram({
+    name: 'metric_name',
+    help: 'metric_help',
+    buckets: [0.1, 5, 15, 50, 100, 500],
+});
+
+const hist2 = new client.Histogram({
+    name: 'api_call_time',
+    help: 'metric_help',
+    buckets: [0.1, 5, 15, 50, 100, 500],
+});
+
 class ViewCount extends BasicController {
     async getPostsViewCount({ postLinks }) {
+        callCounter.inc();
+        callCounter2.inc();
+
         if (!postLinks) {
             throw {
                 code: 1110,
                 message: 'Invalid params',
             };
         }
+
+        const start = Date.now();
+        const end = hist2.startTimer();
 
         const results = [];
 
@@ -22,6 +54,11 @@ class ViewCount extends BasicController {
                 });
             })
         );
+
+        end();
+
+        const elapsed = Date.now() - start;
+        hist.observe(elapsed);
 
         return {
             results,
