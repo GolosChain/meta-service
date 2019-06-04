@@ -13,7 +13,7 @@ const callCounter = new client.Counter({
 });
 
 const callCounter2 = new client.Counter({
-    name: 'api_getpostsviewcount_count',
+    name: 'api_getpostsviewcount_count_2',
     help: 'api call count',
 });
 
@@ -33,6 +33,8 @@ class ViewCount extends BasicController {
     async getPostsViewCount({ postLinks }) {
         callCounter.inc();
         callCounter2.inc();
+
+        console.log('inced');
 
         if (!postLinks) {
             throw {
