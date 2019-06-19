@@ -3,12 +3,11 @@ const env = require('./env');
 const Connector = require('./services/Connector');
 const Cleaner = require('./services/Cleaner');
 
-const stats = core.utils.statsClient;
 const { BasicMain, MongoDB } = core.services;
 
 class Main extends BasicMain {
     constructor() {
-        super(stats, env);
+        super(env);
 
         this.defineMeta({
             name: 'meta',
