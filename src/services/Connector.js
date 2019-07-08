@@ -9,14 +9,13 @@ class Connector extends BasicConnector {
         const viewCount = new ViewCount();
         const userOnline = new UserOnline();
 
+        // TODO Validation
         await super.start({
             serverRoutes: {
                 getPostsViewCount: viewCount.getPostsViewCount.bind(viewCount),
                 recordPostView: viewCount.recordPostView.bind(viewCount),
                 markUserOnline: userOnline.markUserOnline.bind(userOnline),
-                getUserLastOnline: userOnline.getUserLastOnline.bind(
-                    userOnline
-                ),
+                getUserLastOnline: userOnline.getUserLastOnline.bind(userOnline),
             },
         });
     }
