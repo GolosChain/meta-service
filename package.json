@@ -10,7 +10,7 @@
   "author": "golos.io",
   "license": "ISC",
   "dependencies": {
-    "gls-core-service": "^3.43.0",
+    "gls-core-service": "^3.49.0",
     "moment": "^2.23.0"
   },
   "prettier": {
