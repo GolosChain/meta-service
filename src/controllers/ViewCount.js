@@ -1,5 +1,5 @@
 const core = require('gls-core-service');
-const { Post, View } = require('../model');
+const { Post } = require('../model');
 
 const BasicController = core.controllers.Basic;
 
@@ -38,38 +38,13 @@ class ViewCount extends BasicController {
         return post.viewCount;
     }
 
-    async recordPostView({ postLink, fingerPrint, clientRequestIp }) {
+    async recordPostView({ postLink }) {
         if (!postLink) {
             throw {
                 code: 1110,
                 message: 'Invalid params',
             };
         }
-
-        // if (!postLink || !fingerPrint || !clientRequestIp) {
-        //     throw {
-        //         code: 1110,
-        //         message: 'Invalid params',
-        //     };
-        // }
-        //
-        // const viewKey = `${postLink}_${clientRequestIp}_${fingerPrint}`;
-        //
-        // try {
-        //     const view = new View({
-        //         viewKey,
-        //         ts: new Date(),
-        //     });
-        //
-        //     await view.save();
-        // } catch (err) {
-        //     // 11000 - duplicate key error
-        //     if (err.code === 11000) {
-        //         return;
-        //     } else {
-        //         throw err;
-        //     }
-        // }
 
         await Post.updateOne({ postLink }, { $inc: { viewCount: 1 } }, { upsert: true });
     }

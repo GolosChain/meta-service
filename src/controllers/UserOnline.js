@@ -5,11 +5,7 @@ const BasicController = core.controllers.Basic;
 
 class PostCountView extends BasicController {
     async markUserOnline({ user }) {
-        await User.updateOne(
-            { username: user },
-            { lastOnlineAt: new Date() },
-            { upsert: true }
-        );
+        await User.updateOne({ username: user }, { lastOnlineAt: new Date() }, { upsert: true });
     }
 
     async getUserLastOnline({ user }) {
